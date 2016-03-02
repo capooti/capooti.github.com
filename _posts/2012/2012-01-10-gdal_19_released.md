@@ -1,12 +1,11 @@
 ---
-categories: GIS, GDAL, GFT
-date: 2012/01/10 20:00:00
-guid: http://www.paolocorti.net/2012/01/10/gdal_19_released/
-permalink: http://www.paolocorti.net/2012/01/10/gdal_19_released/
-tags: GIS, GDAL, GFT
-title: Playing with the Esri File Geodatabase and the Google Fusion Tables GDAL drivers
-draft: false
+layout: post
+title: "Playing with the Esri File Geodatabase and the Google Fusion Tables GDAL drivers"
+description: "Playing with the Esri File Geodatabase and the Google Fusion Tables GDAL drivers"
+category:
+tags: [GIS, GDAL, GFT]
 ---
+{% include JB/setup %}
 
 Today in the GDAL mailing list [Frank Warmerdam] [0] has announced that GDAL 1.9.0 has finally been [released] [1].
 Being a major new release, it offers many new features, but what I was waiting for is the support for [Esri File GDB] [2] and [Google Fusion Table] [3].
@@ -26,7 +25,7 @@ After compilation I could verify that I had this format supported by using the -
     ...
     -> "FileGDB" (read/write)
     ...
-    
+
 I could then easily import a shapefile to a new file GDB, by using the ogr2ogr command:
 
     $ ogr2ogr -f "FileGDB" mygdb.gdb ~/data/shapefile/country.shp
@@ -50,7 +49,7 @@ After compilation you can easily verify that your GDAL installation is supportin
 After installation, I could then import a shapefile straight to the Google cloud, by using the ogr2ogr command with the GFT driver:
 
     $ ogr2ogr -f GFT "GFT:email=myuser@gmail.com password=mypassword" ~/data/shapefile/country.shp
-    
+
 And as soon as my shapefile was uploaded to the cloud, I could easily [access it with the Google Maps API] [4]
 
 So, now that we have the GDAL support for this formats, next step will be to support them in the plethora of GIS tools using the GDAL library (QGIS, MapServer, GeoServer....).
@@ -62,4 +61,3 @@ Brilliant!
 [2]: http://www.gdal.org/ogr/drv_filegdb.html
 [3]: http://www.gdal.org/ogr/drv_gft.html
 [4]: https://www.google.com/fusiontables/DataSource?snapid=S355557avFt
-

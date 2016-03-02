@@ -1,12 +1,11 @@
 ---
-categories: GIS, books, PostGIS, Postgres
-date: 2011/04/25 23:00:00
-guid: http://www.paolocorti.net/2011/04/25/postgis-in-action/
-permalink: http://www.paolocorti.net/2011/04/25/postgis-in-action/
-tags: GIS, books, PostGIS, Postgres
-title: PostGIS in action
-draft: false
+layout: post
+title: "PostGIS in action"
+description: "PostGIS in action"
+category:
+tags: [GIS, books, PostGIS, Postgres]
 ---
+{% include JB/setup %}
 
 [PostGIS in action] [1] has landed: finally a book about PostGIS, we were all missing it!  
 A software project that has a public visibility since almost 10 years, with a large community and a long series of use cases, finally has its deserved book.
