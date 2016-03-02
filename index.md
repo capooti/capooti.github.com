@@ -1,36 +1,31 @@
 ---
 layout: page
-title: Hello World!
-tagline: Supporting tagline
+title: Thinking in GIS
+tagline: Geospatial musings from Cambridge
 ---
 {% include JB/setup %}
 
-Read [Jekyll Quick Start](http://jekyllbootstrap.com/usage/jekyll-quick-start.html)
+<img src="/assets/images/me.png" alt="Paolo Corti, Thinking in GIS" />
 
-Complete usage and documentation available at: [Jekyll Bootstrap](http://jekyllbootstrap.com)
+I have been glued (without hope of freedom) to a computer since the early 80's when I have been developing some [Zork-like][1] adventure games on my Commodore Vic20/64/Amiga 1000. I landed in GIS in the late 90's, writing some (now museum-worthy) AML code for ARC/INFO and then migrating to ArcObjects and finally to Open Source GIS.
 
-## Update Author Attributes
+I have been now working for more than 15 years in the geospatial industry: after working with proprietary solutions for some years, in 2006 I finally proudly switched to open source technologies and Python.
 
-In `_config.yml` remember to specify your own data:
-    
-    title : My Blog =)
-    
-    author :
-      name : Name Lastname
-      email : blah@email.test
-      github : username
-      twitter : username
+I am a Geospatial Engineer Fellow at the [Center for Geographic Analysis of the University of Harvard][2] and in the past I worked as a software architect, developer and analyst for organizations such as [UN World Food Programme][3], [EU Joint Research Centre][4] and the [Italian Government][5].
 
-The theme should reference these variables whenever needed.
-    
-## Sample Posts
+I am an OSGeo Charter member and member of the pyCSW and GeoNode Project Steering Committees. I am co-author of the PostGIS Cookbook by Packt.
 
-This blog contains sample posts which help stage pages and blog data.
-When you don't need the samples anymore just delete the `_posts/core-samples` folder.
+Contact me by email at pcorti@gmail.com.
 
-    $ rm -rf _posts/core-samples
+Some link related to my web presence:
 
-Here's a sample "posts list".
+* <a href="http://twitter.com/capooti">Twitter</a>
+* <a href="https://github.com/capooti">github</a>
+* <a href="http://www.linkedin.com/in/paolocorti">LinkedIn</a>
+* <a href="http://gis.stackexchange.com/users/1644/paolo-corti">gis.stackexchange</a>
+* <a href="http://runkeeper.com/user/capooti/profile">RunKeeper</a>
+
+Posts from my blog:
 
 <ul class="posts">
   {% for post in site.posts %}
@@ -38,9 +33,8 @@ Here's a sample "posts list".
   {% endfor %}
 </ul>
 
-## To-Do
-
-This theme is still unfinished. If you'd like to be added as a contributor, [please fork](http://github.com/plusjade/jekyll-bootstrap)!
-We need to clean up the themes, make theme usage guides with theme-specific markup examples.
-
-
+[1]: http://en.wikipedia.org/wiki/Zork
+[2]: http://gis.harvard.edu/
+[3]: http://geonode.wfp.org/
+[4]: http://forest.jrc.ec.europa.eu/
+[5]: http://www.sviluppoeconomico.gov.it/
