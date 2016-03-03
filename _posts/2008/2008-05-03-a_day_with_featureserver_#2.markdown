@@ -1,17 +1,16 @@
 ---
-categories: Uncategorized, GIS, PostGIS, devs, Windows, Ubuntu, FeatureServer, Python,
-  WMS, OpenStreetMap, Web2.0, Flickr, Twitter, OpenLayers, WFS
-date: 2008/05/03 02:13:47
-guid: http://www.paolocorti.net/public/wordpress/index.php/2008/05/03/a-day-with-featureserver-2/
-permalink: http://www.paolocorti.net/2008/05/03/a-day-with-featureserver-2/
-tags: Uncategorized, GIS, PostGIS, devs, Windows, Ubuntu, FeatureServer, Python, WMS,
-  OpenStreetMap, Web2.0, Flickr, Twitter, OpenLayers, WFS
-title: 'A day with FeatureServer #2'
+layout: post
+title: "A day with FeatureServer #2"
+description: "A day with FeatureServer #2"
+category:
+tags: [Uncategorized, GIS, PostGIS, devs, Windows, Ubuntu, FeatureServer, Python, WMS, OpenStreetMap, Web2.0, Flickr, Twitter, OpenLayers, WFS]
 ---
-In the <a href="http://www.paolocorti.net/public/wordpress/index.php/2008/02/21/a-day-with-featureserver-1/">previous post</a> we have seen an introduction to FeatureServer, and we were just playing with the base edit sample, with the scribble layer.
+{% include JB/setup %}
+
+In the previous post we have seen an introduction to FeatureServer, and we were just playing with the base edit sample, with the scribble layer.
 Now it is time to use FeatureServer with our datasets: I am assuming that you will want to create FeatureServer services for shapefiles, PostGis layers, OpenStreetMap, Twitter and Flickr.
 
-<a href='http://www.paolocorti.net/public/wordpress/wp-content/uploads/2008/05/adaywithfeatureserver.png'><img src="http://www.paolocorti.net/public/wordpress/wp-content/uploads/2008/05/adaywithfeatureserver.png" alt="" title="the nice OpenLayers interface with the Yahoo Map WMS and some data source from FeatureServer" width="150" height="112" class="alignnone size-thumbnail wp-image-80" /></a>
+<a href='/assets/images/adaywithfeatureserver.png'><img src="/assets/images/adaywithfeatureserver.png" alt="" title="the nice OpenLayers interface with the Yahoo Map WMS and some data source from FeatureServer" width="150" height="112" class="alignnone size-thumbnail wp-image-80" /></a>
 
 <strong>Data preparation for this demo</strong>
 
@@ -36,7 +35,7 @@ then load them into postgis:
 
 <pre lang="text">
 corti@corti-ubuntu:~/training/featureserver/data/newyork$ psql -d gisdb -h localhost -U gis -f streets4326.sql
-corti@corti-ubuntu:~/training/featureserver/data/newyork$ psql -d gisdb -h localhost -U gis -f blocks4326.sql 
+corti@corti-ubuntu:~/training/featureserver/data/newyork$ psql -d gisdb -h localhost -U gis -f blocks4326.sql
 </pre>
 
 <strong>3) Open Street Map</strong>
@@ -50,19 +49,19 @@ http://featureserver/featureserver.cgi/osm/8551622.gml
 </pre>
 
 <strong>4) Flickr</strong>
-To play this whole demo you should have access to an account (yours or some other's with public photos in the New York area we are using) for Flickr. 
+To play this whole demo you should have access to an account (yours or some other's with public photos in the New York area we are using) for Flickr.
 Flickr is an outstanding photos management web 2.0 application you may already know, if not it is worth to try it (you can have a free account if you are not wanting to upload thousands of pictures per month).
 Obviously the photos must be geotagged (= location fields in the EXIF files must be not empty), so after uploading some pictures you will have 4 ways to go:
 <ul>
 <li>
 You are a very lucky owner of a GPS-enabled camera, that will automatically geotag your photos, like <a href="http://www.spatiallyadjusted.com/2007/01/18/ricoh-releases-new-gps-ready-digital-camera/">this one</a>
-</li> 
+</li>
 <li>
 You may buy a GPS to integrate with your camera to obtain geotagged photos (generally you may need some kind of software that interpolate your GPS route or points and the photos using the time at which both point and photos are taken). Or some producer is able to connect their camera at external GPS, and automatically get the location for EFIX, like <a href="http://www.canon.co.jp/imaging/wft/wft-e2/manual/gps/index.html">this one from Canon</a>
-</li> 
+</li>
 <li>
 Last (but not least in many cases, specially for your old pictures) you may still manually geotag your photos, by using the map application in the Flickr web site (or many other desktop and web applications out there)
-</li> 
+</li>
 </ul>
 
 The way to access to all your geotagged photos from FeatureServer is like usual:
@@ -92,7 +91,7 @@ curl -X PUT  -u username:password -d location="Via Berto, Rome, Italy" http://tw
 
 If you want to know more about twitter and its location API, a good place to start is <a href="http://highearthorbit.com/twitter-location-api/">this nice post with useful info from Andrew Turner</a>.
 
-<strong>The configuration file</strong> 
+<strong>The configuration file</strong>
 
 this is the featureserver.cfg file i am using (for more info look at the datasources.txt in the doc directory of FeatureServer): you can copy this and make some little modifications (the path to the shapefiles, the connection string for PostGis, etc...)
 
@@ -181,7 +180,7 @@ Now we will use the outstanding OpenLayers for testing our FeatureServer datasou
 
 We will use this html page: you need to place it in your web server:
 
-$$code(lang=html)
+{% highlight html %}
 <html>
 <head>
   <title>OpenLayers Example: a day with FeatureServer</title>
@@ -199,10 +198,10 @@ $$code(lang=html)
 	function init(){
 		//create the map
 		var map = new OpenLayers.Map('map', {'maxResolution': .28125, tileSize: new OpenLayers.Size(512, 512)});
-		//create the WMS layers (metacarta basic, metacarta satellite, 
+		//create the WMS layers (metacarta basic, metacarta satellite,
 		//google hybrid, google satellite, virtualearth, yahoo, worldwind bathy, worldwind landsat
-		var olwms = new OpenLayers.Layer.WMS( "OpenLayers WMS basic", "http://labs.metacarta.com/wms-c/Basic.py", {'layers':'basic'}); 
-		var olwms2 = new OpenLayers.Layer.WMS( "OpenLayers WMS satellite", "http://labs.metacarta.com/wms-c/Basic.py", {'layers':'satellite'}); 
+		var olwms = new OpenLayers.Layer.WMS( "OpenLayers WMS basic", "http://labs.metacarta.com/wms-c/Basic.py", {'layers':'basic'});
+		var olwms2 = new OpenLayers.Layer.WMS( "OpenLayers WMS satellite", "http://labs.metacarta.com/wms-c/Basic.py", {'layers':'satellite'});
 		var google = new OpenLayers.Layer.Google( "Google Hybrid Map", { type: G_HYBRID_MAP } );
 		var google2 = new OpenLayers.Layer.Google( "Google Satellite Map", { type: G_SATELLITE_MAP } );
 		var virtualearth = new OpenLayers.Layer.VirtualEarth( "Virtual Earth Hybrid", {type: VEMapStyle.Hybrid });
@@ -211,25 +210,25 @@ $$code(lang=html)
 		var  ww2 = new OpenLayers.Layer.WorldWind( "WorldWind LANDSAT", "http://worldwind25.arc.nasa.gov/tile/tile.aspx", 2.25, 4,{T:"105"});
 		//create the WFS layers
 		//1. shapefiles WFS layers
-		var wfsNYblocksSHP = new OpenLayers.Layer.WFS("WFS New York blocks (shp)", "featureserver.cgi/blocks?format=WFS", 
+		var wfsNYblocksSHP = new OpenLayers.Layer.WFS("WFS New York blocks (shp)", "featureserver.cgi/blocks?format=WFS",
 			{maxfeatures: "300"}, {extractAttributes: true, displayInLayerSwitcher: true});
-		var wfsNYstreetsSHP = new OpenLayers.Layer.WFS("WFS New York streets (shp)", "featureserver.cgi/streets?format=WFS", 
+		var wfsNYstreetsSHP = new OpenLayers.Layer.WFS("WFS New York streets (shp)", "featureserver.cgi/streets?format=WFS",
 			{maxfeatures: "300"}, {extractAttributes: true, displayInLayerSwitcher: true});
 		//2. postgis WFS layers (with a different style than default)
-		var wfsNYblocksPG = new OpenLayers.Layer.WFS("WFS New York blocks (postgis)", "featureserver.cgi/blocksPG?format=WFS", 
+		var wfsNYblocksPG = new OpenLayers.Layer.WFS("WFS New York blocks (postgis)", "featureserver.cgi/blocksPG?format=WFS",
 			{maxfeatures: "300"}, {extractAttributes: true, displayInLayerSwitcher: true});
 		wfsNYblocksPG.style = {fillColor:'#FF0000', fillOpacity: 0.2, strokeColor: "#FF0000", strokeOpacity: 1, strokeWidth: 1};
-		var wfsNYstreetsPG = new OpenLayers.Layer.WFS("WFS New York streets (postgis)", "featureserver.cgi/streetsPG?format=WFS", 
+		var wfsNYstreetsPG = new OpenLayers.Layer.WFS("WFS New York streets (postgis)", "featureserver.cgi/streetsPG?format=WFS",
 			{maxfeatures: "300"}, {extractAttributes: true, displayInLayerSwitcher: true});
 		wfsNYstreetsPG.style = {fillColor:'#FF0000', fillOpacity: 0.2, strokeColor: "#FF0000", strokeOpacity: 1, strokeWidth: 1};
 		//3. osm WFS layer
-		var wfsOSM = new OpenLayers.Layer.WFS("OpenStreetMap", "featureserver.cgi/osm?format=WFS", 
+		var wfsOSM = new OpenLayers.Layer.WFS("OpenStreetMap", "featureserver.cgi/osm?format=WFS",
 			{maxfeatures: "5"}, {extractAttributes: true, displayInLayerSwitcher: true});
 		//4. flickr WFS layer
-		var wfsFlickr = new OpenLayers.Layer.WFS("New York Flickrs", "featureserver.cgi/flickr?format=WFS", 
+		var wfsFlickr = new OpenLayers.Layer.WFS("New York Flickrs", "featureserver.cgi/flickr?format=WFS",
 			{maxfeatures: "300"}, {extractAttributes: true, displayInLayerSwitcher: true});
 		//5. twitter WFS layer
-		var wfsTwitter = new OpenLayers.Layer.WFS("My Twitter", "featureserver.cgi/twitter?format=WFS", 
+		var wfsTwitter = new OpenLayers.Layer.WFS("My Twitter", "featureserver.cgi/twitter?format=WFS",
 			{maxfeatures: "300"}, {extractAttributes: true, displayInLayerSwitcher: true});
 		//add the layers to the map
 		map.addLayers([wfsTwitter,wfsFlickr,wfsOSM,wfsNYstreetsPG,wfsNYblocksPG,wfsNYstreetsSHP, wfsNYblocksSHP,
@@ -250,7 +249,7 @@ $$code(lang=html)
       <script defer="defer" type="text/javascript">
     </body>
 </html>
-$$/code
+{% endhighlight %}
 
 note the java api we are using for accessing the various WMS!
 
@@ -278,4 +277,3 @@ http://featureserver/featureserver.cgi/blocks?format=WFS&maxfeatures=300&SERVICE
 It is easy to understand that the request OpenLayers is doing to the various FeatureServer datasources is always the same kind: a get feature request with a bounding box (the area you are zooming).
 
 Ok, time to end with this long post, hope now FeatureServer (and various other things) are now a bit easier to understand for you - at least after this long tests it was for me!
-

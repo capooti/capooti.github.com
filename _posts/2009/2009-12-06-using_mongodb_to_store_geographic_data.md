@@ -1,11 +1,12 @@
 ---
-categories: Uncategorized, GIS, devs, Python, GDAL, MongoDb, NoSQL
-date: 2009/12/06 03:01:26
-guid: http://www.paolocorti.net/?p=202
-permalink: http://www.paolocorti.net/2009/12/06/using-mongodb-to-store-geographic-data/
-tags: Uncategorized, GIS, devs, Python, GDAL, MongoDb, NoSQL
-title: Using MongoDb to store geographic data
+layout: post
+title: "Using MongoDb to store geographic data"
+description: "Using MongoDb to store geographic data"
+category:
+tags: [Uncategorized, GIS, devs, Python, GDAL, MongoDb, NoSQL]
 ---
+{% include JB/setup %}
+
 ### The NoSQL movement
 <p>In the last months there has been a plenty of activity in the <a href="http://en.wikipedia.org/wiki/NoSQL">non relational (NoSQL)</a> database world.</p>
 <p>NoSQL database tries to solve 3 main RDBMS problems:</p>
@@ -61,7 +62,7 @@ paolo@paolo-laptop:~$ ./training/mongodb-linux-i686-2009-10-14/bin/mongod
 Download it if you want to follow this sample step by step.</p>
 <p>Now it is time to run some code. Just copy and paste in a file the following scripts and execute it:</p>
 
-$$code(lang=python)
+{% highlight python %}
 import os
 from pymongo.connection import Connection
 from progressbar import ProgressBar
@@ -181,7 +182,7 @@ print feature
 # some query now
 print 'There are %s counties in STATE = 40' % collection.find({"STATE": "40"}).count()
 print 'There are %s counties in STATE = 40 and AREA > 0.5' % collection.find({"STATE": "40", "AREA": {"$gt": 0.5}}).count()
-$$/code
+{% endhighlight %}
 
 <p>code is deeply commented, so understanding what is going on should be simple.</p>
 <p>Basically:</p>
@@ -194,7 +195,7 @@ $$/code
 </ul>
 <p>This is the output at my console:</p>
 
-$$code(lang=bash)
+{% highlight bash %}
 (mongodb)paolo@paolo-laptop:~/training/mongodb/geomongo$ python geomongodb.py
 Importing data to mongodb...
 *** Converting a shapefile to a mongodb collection ***
@@ -225,7 +226,7 @@ Here is one random feature that has been stored:
 ,-75.674975000000003 40.242876000000003))', u'_id': ObjectId('4b1aef531c900d23a900005f')}
 There are 77 counties in STATE = 40
 There are 2 counties in STATE = 40 and AREA > 0.5
-$$/code
+{% endhighlight %}
 
 ### Useful resources
 <p>I have found useful this blog post about <a  href="http://gissolved.blogspot.com/2009/05/populating-mongodb-with-pois.html">using MongoDb with Esri ArcGis</a></p>

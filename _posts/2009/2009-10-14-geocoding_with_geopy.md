@@ -1,11 +1,12 @@
 ---
-categories: Uncategorized, GIS, devs, Python, geopy, google, yahoo, geonames
-date: 2009/10/14 12:02:37
-guid: http://www.paolocorti.net/?p=151
-permalink: http://www.paolocorti.net/2009/10/14/geocoding-with-geopy/
-tags: Uncategorized, GIS, devs, Python, geopy, google, yahoo, geonames
-title: Geocoding with GeoPy
+layout: post
+title: "Geocoding with GeoPy"
+description: "Geocoding with GeoPy"
+category:
+tags: [Uncategorized, GIS, devs, Python, geopy, google, yahoo, geonames]
 ---
+{% include JB/setup %}
+
 There are now may geocoding web services out there, like <a href="http://code.google.com/apis/maps/documentation/index.html#Geocoding_HTTP_Request">Google geocoder</a>, <a href="http://developer.yahoo.com/maps/rest/V1/geocode.html">Yahoo geocoder</a>,  <a href="http://geocoder.us/">geocoder.us</a> (only for US address), <a href="http://msdn.microsoft.com/en-us/library/cc983790.aspx">Microsoft MapPoint</a>, <a href="http://www.geonames.org/">GeoNames</a> and <a href="http://www.mediawiki.org/wiki/MediaWiki">MediaWiki</a>.
 
 Normally you may access this web services API directly with HTTP <del datetime="2009-10-16T07:27:16+00:00">REST</del> request, and get a response in common formats like xml, json, kml.
@@ -15,7 +16,7 @@ For example you may geocode with the Google geocoder an address like this one: "
 
 In this case we are querying the Google geocoder web service to get a response in json via the output parameter in the query string. This is the json response we get back from the web service:
 
-$$code(lang=json)
+{% highlight json %}
 {
   "name": "1071 5th Avenue, New York, NY",
   "Status": {
@@ -63,7 +64,7 @@ $$code(lang=json)
     }
   } ]
 }
-$$/code
+{% endhighlight %}
 
 Note that the response includes the main result (the coordinates of the geocoded point) and other important attributes, like - in the case of Google - the administrative area name, the sub administrative area name, the country name and so on.
 
@@ -73,7 +74,7 @@ If we make this request to the web services:
 
 we get this response:
 
-$$code(lang=xml)
+{% highlight xml %}
 <geonames style="MEDIUM">
 <totalResultsCount>1</totalResultsCount>
 <geoname>
@@ -87,13 +88,13 @@ $$code(lang=xml)
 <fcode>BLDG</fcode>
 </geoname>
 </geonames>
-$$/code
+{% endhighlight %}
 
 This is the same request made to the Yahoo Geocoding Web Service: <a href="http://local.yahooapis.com/MapsService/V1/geocode?appid=your_app_id&street=1071+Fifth+Avenue&city=NY&state=NY">http://local.yahooapis.com/MapsService/V1/geocode?appid=your_app_id&street=1071+Fifth+Avenue&city=NY&state=NY</a>
 
 And this is the result (only xml and Serialized PHP are available for Yahoo):
 
-$$code(lang=python)
+{% highlight xml %}
 <ResultSet xsi:schemaLocation="urn:yahoo:maps http://api.local.yahoo.com/MapsService/V1/GeocodeResponse.xsd">
 <Result precision="address">
 <Latitude>40.782976</Latitude>
@@ -105,7 +106,7 @@ $$code(lang=python)
 <Country>US</Country>
 </Result>
 </ResultSet>
-$$/code
+{% endhighlight %}
 
 Google and GeoNames have also the possibility to reverse geocoding an address (to find an associated textual location such as a street address from geographic coordinates).
 This is how to do the reverse geocoding request with Google (note that now we pass in the querystring the coordinates of the point and not the address):
@@ -113,7 +114,7 @@ This is how to do the reverse geocoding request with Google (note that now we pa
 
 And this is the result (we still have a json output - note that there in this case are many results!):
 
-$$code(lang=python)
+{% highlight json %}
 {
   "name": "40.7829790,-73.9588670",
   "Status": {
@@ -198,12 +199,12 @@ $$code(lang=python)
     }
   },
 .... other results
-$$/code
+{% endhighlight %}
 
 If you need to invoke these web services in your code and you are using a Python, there is an excellent API that let you query all these web services in the same manner without messing your code with xml/json request/response to them: this API is called GeoPy.
 Let's see how it is easy to work with it. First I create a virtualenv in my Ubuntu 9.04 with Python 2.5 and geopy 0.93. GeoPy at this time doesn't support Python > 2.5, and I will use the GeoPy from a branch, because that is the only one that at this time supporting reverse geocoding. If you do not need reverse geocoding you may use the stable version.
 
-<pre>
+{% highlight bash %}
 paolo@paolo-laptop:~/training$ virtualenv --python=python2.5 geopy
 Running virtualenv with interpreter /home/paolo/training/reverse_geocoding/bin/python2.5
 Using real prefix '/usr'
@@ -222,18 +223,19 @@ Adding geopy 0.93dev-r84 to easy-install.pth file
 Installed /home/paolo/training/geopy/lib/python2.5/site-packages/geopy-0.93dev_r84-py2.5.egg
 Processing dependencies for geopy==0.93dev-r84
 Finished processing dependencies for geopy==0.93dev-r84
-</pre>
+{% endhighlight %}
 
 GeoPy needs SimpleJson and BeautifulSoup, so we install them in the virtualenv:
-<pre>
+
+{% highlight bash %}
 (geocoding)paolo@paolo-laptop:~/training/geocoding$ easy_install simplejson
 (geocoding)paolo@paolo-laptop:~/training/geocoding$ easy_install BeautifulSoup
-</pre>
+{% endhighlight %}
 
 Now let's activate the virtualenv againg and time to test this API.
 I will geocode the address with Google and after I get the point coordinates I will reverse geocode that point:
 
-$$code(lang=python)
+{% highlight python %}
 >>>from geopy import geocoders
 >>>g = geocoders.Google('your_api_key')
 >>>(place, point) = g.geocode('1071 5th Avenue, New York, NY')
@@ -244,21 +246,19 @@ Fetching http://maps.google.com/maps/geo?q=1071+5th+Avenue%2C+New+York%2C+NY&out
 Fetching http://maps.google.com/maps/geo?q=40.782979%2C-73.958867&output=kml&key=your_api_key...
 >>>print new_place, new_point
 1070 5th Ave, New York, NY 10128, USA (40.783009999999997, -73.958906999999996)
-$$/code
+{% endhighlight %}
 
 Using the API with different web services is just very similiar, there is a geocoder class for each web service: this is how to interact with Yahoo:
 
-$$code(lang=python)
+{% highlight python %}
 >>>from geopy import geocoders
 >>>y = geocoders.Yahoo('your_app_id')
 >>>(place, point) = y.geocode('1071 5th Avenue, New York, NY')
 Fetching http://api.local.yahoo.com/MapsService/V1/geocode?output=xml&location=1071+5th+Avenue%2C+New+York%2C+NY&appid=your_app_id...
 >>>print place, point
 1071 5th Ave, New York, NY 10128-0112, US (40.782975999999998, -73.959357999999995)
-$$/code
+{% endhighlight %}
 
 You will find more samples at the <a href="http://code.google.com/p/geopy/w/list">GeoPy website</a>.
 
 One thing that is useful with these Geocoding Web Services is the possibility to get the accuracy of the geocoded address: Google calls this <a href="http://code.google.com/apis/maps/documentation/reference.html#GGeoAddressAccuracy">"Accuracy"</a>, Yahoo calls this <a href="http://developer.yahoo.com/maps/rest/V1/geocode.html">"Precision"</a>. You have seen the value of this parameter in the answers from the web services. Unluckily this value is still not accessible from GeoPy, but looks like <a href="http://code.google.com/p/geopy/wiki/NovemberSprint">it will be soon implemented</a>.
-
-

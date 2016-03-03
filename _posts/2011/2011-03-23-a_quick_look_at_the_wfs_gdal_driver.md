@@ -1,11 +1,11 @@
 ---
-categories: GIS, GDAL, OGR, WFS, Python
-date: 2011/03/23 23:00:00
-guid: http://www.paolocorti.net/2011/03/23/a-quick-look-at-the-wfs-gdal-driver/
-permalink: http://www.paolocorti.net/2011/03/23/a-quick-look-at-the-wfs-gdal-driver/
-tags: GIS, GDAL, OGR, WFS, Python
-title: A quick look at the WFS GDAL Driver
+layout: post
+title: "A quick look at the WFS GDAL Driver"
+description: "A quick look at the WFS GDAL Driver"
+category:
+tags: [GIS, GDAL, OGR, WFS, Python]
 ---
+{% include JB/setup %}
 
 If you have ever tried to interact with a WFS (via a browser, or curl, or OpenLayers or whatever), you are fully aware that it has alway been a pain to interact with, and until now the only Python library that made life simpler was the excellent OWSLib by Sean Gillies (that, BTW, will deserve itself another post at this blog in the next weeks).
 
@@ -122,7 +122,7 @@ In this first sample script, I want to show how easy it is to access to the meta
 As always the starting point is to create an OGR driver (in this case a WFS one), and then the access to all the classes of the API are just the same like for other OGR drivers (for example for a shapefile).
 
 (sample.py)
-$$code(lang=python)
+{% highlight python %}
 from osgeo import ogr
 driver = ogr.GetDriverByName('WFS')
 wfs = driver.Open("WFS:http://geohub.jrc.ec.europa.eu/effis/ows")
@@ -130,9 +130,9 @@ for i in range(0, wfs.GetLayerCount()):
     layer = wfs.GetLayerByIndex(i)
     sr = layer.GetSpatialRef()
     print 'Layer: %s, Features: %s, SR: %s...' % (layer.GetName(), layer.GetFeatureCount(), sr.ExportToWkt()[0:50])
-$$/code
+{% endhighlight %}
 
-    $ python sample.py 
+    $ python sample.py
     Layer: EFFIS:FireNews, Features: 7, SR: GEOGCS["WGS 84",DATUM["WGS_1984",SPHEROID["WGS 84"...
     Layer: EFFIS:Fires30Days, Features: 14, SR: GEOGCS["WGS 84",DATUM["WGS_1984",SPHEROID["WGS 84"...
     Layer: EFFIS:Fires7Days, Features: 0, SR: GEOGCS["WGS 84",DATUM["WGS_1984",SPHEROID["WGS 84"...
@@ -143,7 +143,7 @@ $$/code
 In this second sample script, I am iterating through all the features of a layer and for each feature I get the Json representation.
 
 (sample2.py)
-$$code(lang=python)
+{% highlight python %}
 from osgeo import ogr
 driver = ogr.GetDriverByName('WFS')
 wfs = driver.Open("WFS:http://geohub.jrc.ec.europa.eu/effis/ows")
@@ -151,9 +151,9 @@ layer = wfs.GetLayerByName('FiresAll')
 for feature in layer:
     print 'Json representation for Feature: %s' % feature.GetFID()
     print feature.ExportToJson()
-$$/code
+{% endhighlight %}
 
-    $ python sample2.py 
+    $ python sample2.py
     Json representation for Feature: 1
     {"geometry": {"type": "Point", "coordinates": [-7.0855540000000001, 42.070912999999997]}, "type": "Feature", "properties": {"Province": "Ourense", "Commune": "Gudina, A", "LastUpdate": "11-02-2011", "FireDate": "06-02-2011", "Country": "ES", "Y": 2267694.6600000001, "gml_id": "FiresAll.1", "CountryFul": "Spain", "Area_HA": 55.0, "X": 2915712.1400000001, "Class": "30DAYS"}, "id": 1}
     Json representation for Feature: 2
@@ -162,5 +162,3 @@ $$/code
 So far as I have seen, once again GDAL reveals itself an invaluable toolsets and API that any serious GIS developers should master.
 
 Brilliant!
-
-

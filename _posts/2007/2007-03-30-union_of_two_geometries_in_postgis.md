@@ -1,11 +1,12 @@
 ---
-categories: PostGIS, devs
-date: 2007/03/30 17:49:01
-guid: http://www.paolocorti.net/public/wordpress/index.php/2007/03/30/union-of-two-geometries-in-postgis/
-permalink: http://www.paolocorti.net/2007/03/30/union-of-two-geometries-in-postgis/
-tags: PostGIS, devs
-title: Union of two geometries in PostGIS
+layout: post
+title: "Union of two geometries in PostGIS"
+description: "Union of two geometries in PostGIS"
+category:
+tags: [PostGIS, devs]
 ---
+{% include JB/setup %}
+
 For people not familiar with the Spatial SQL, I post this quick sample showing its beauty and simplicity at the same time.
 We will go using PostGIS, but this could be performed in a similiar way with any GIS Database compliant with <a href="http://www.opengeospatial.org/standards/sfs">OGC Simple Feature Access - SQL Option</a>.
 
@@ -13,10 +14,10 @@ We will go using PostGIS, but this could be performed in a similiar way with any
 
 The geomunion Open GIS function make it possible to combine two geometries and getting from these a single geometry.
 
-<pre lang="sql">
+{% highlight sql %}
 FUNCTION geomunion(geometry, geometry)
   RETURNS geometry
-</pre>
+{% endhighlight %}
 
 It is very easy to generate a geoprocessed layer from an original layer, making an union of its polygons based on a common attribute.
 
@@ -26,19 +27,19 @@ I will show you how to use the geomunion PostGIS function with a quick sample.
 
 We will start from a MULTIPOLYGON layer, named polygon1, composed of 7 geometries with different values for the CODE field (1,2,3). In the following picture you can take a look at the polygon1 layer:
 
-<a href='http://www.paolocorti.net/public/wordpress/wp-content/uploads/2007/03/original.gif' title='Original Polygon layer'><img src='http://www.paolocorti.net/public/wordpress/wp-content/uploads/2007/03/original.gif' alt='Original Polygon layer' /></a>
+<a href='/assets/images/original.gif' title='Original Polygon layer'><img src='/assets/images/original.gif' alt='Original Polygon layer' /></a>
 
 We will use the geomunion OpenGIS function to generate another MULTIPOLYGON PostGIS layer, named polygon1_union, composed of the polygons of polygon1 layer merged for the common value of CODE field.
 
 We will get the polygon1_union layer, as in the picture:
 
-<a href='http://www.paolocorti.net/public/wordpress/wp-content/uploads/2007/03/geoprocessed.gif' title='Geoprocessed (unified) Polygon layer'><img src='http://www.paolocorti.net/public/wordpress/wp-content/uploads/2007/03/geoprocessed.gif' alt='Geoprocessed (unified) Polygon layer' /></a>
+<a href='/assets/images/geoprocessed.gif' title='Geoprocessed (unified) Polygon layer'><img src='/assets/images/geoprocessed.gif' alt='Geoprocessed (unified) Polygon layer' /></a>
 
 <strong>Creation of the original PostGIS layer (polygon1)</strong>
 
 To create polygon1 layer, just execute in your PostGIS environment the following SLQ code:
 
-<pre lang="sql">
+{% highlight sql %}
 --create input polygon PostGIS layer for testing this function
 BEGIN;
 CREATE TABLE "polygon1" (gid serial PRIMARY KEY, "code" int4);
@@ -51,7 +52,7 @@ INSERT INTO "polygon1" ("code",the_geom) VALUES ('3','01060000000100000001030000
 INSERT INTO "polygon1" ("code",the_geom) VALUES ('3','01060000000100000001030000000100000006000000B5CB1B70037A314104A54306D4DA5041FC7CE1C9437A3141E95712AD45DB50419F213232AA7C3141C5857CE251DB50418902324DB67C3141CEB42B9028DB5041C4A9EA7F417C3141964085C0E1DA5041B5CB1B70037A314104A54306D4DA5041');
 INSERT INTO "polygon1" ("code",the_geom) VALUES ('3','01060000000100000001030000000100000006000000523C054626773141031236D435DB5041FC7CE1C9437A3141E95712AD45DB5041B5CB1B70037A314104A54306D4DA50411D4C631552783141AEBC61A9C9DA504117F5DB212F773141138F8E6DD0DA5041523C054626773141031236D435DB5041');
 END;
-</pre>
+{% endhighlight %}
 
 <strong>Creation of the geoprocessed PostGIS layer (polygon1_union)</strong>
 
@@ -59,27 +60,27 @@ Now we need to create the PostgreSQL table that will contain the geoprocessed la
 
 First we create the PostgreSQL table with the following sql code (note that we use the same fields from the original layer, polygon1)
 
-<pre lang="sql">
+{% highlight sql %}
 --create table 'polygon1_union' for geometries to be unified
 CREATE TABLE "polygon1_union" (gid serial PRIMARY KEY, "code" int4);
-</pre>
+{% endhighlight %}
 
 Now we add the PostGIS spatial column to this layer using the OpenGIS AddGeometryColumn function:
 
-<pre lang="sql">
+{% highlight sql %}
 --add geometry column (schema_name,table_name,column_name,srid,type,dimension)
 SELECT AddGeometryColumn('','polygon1_union','the_geom','-1','MULTIPOLYGON',2);
-</pre>
+{% endhighlight %}
 
 Finally we insert in the polygon1_union PostGIS layer the polygons from the polygon1 PostGIS layer merged on common values from the CODE field. Note how we have to use the multi PostGIS function in order to avoid the downcasting of multipolygon geometries to polygon geometries.
 
-<pre lang="sql">
+{% highlight sql %}
 --generate merged polygons from original layers based on common values from the code field
 --note: use the multi function because the geomunion could downcast multipolygon to polygon
 insert into polygon1_union (the_geom,code)
-select astext(multi(geomunion(the_geom))) as the_geom,code from polygon1 
+select astext(multi(geomunion(the_geom))) as the_geom,code from polygon1
 group by code
-</pre>
+{% endhighlight %}
 
 <strong>Results</strong>
 
@@ -87,18 +88,18 @@ It is easy to realize that from an original PostGIS layer composed of 7 multipol
 
 The original PostGIS layer, polygon1, is composed of 7 multipolygons, as you can realize querying your database:
 
-<pre lang="sql">
+{% highlight sql %}
 --get original polygon from polygon1
 select code, AsText(the_geom) as the_geom from polygon1
-</pre>
+{% endhighlight %}
 
 In these 7 multipolygons there are 3 ones with a code value of 2, 3 ones with a code value of 3, and only one with a code value of 1.
 
 After geoprocessing polygon1 in polygon1_union PostGIS layer with the geomunion function, there are only 3 multipolygons, one for each value of the code field.
 
-<pre lang="sql">
+{% highlight sql %}
 --get geoprocessed polygon from polygon1_union
 select code, AsText(the_geom) as the_geom from polygon1_union
-</pre>
+{% endhighlight %}
 
 The interesting thing about PostGIS (like for Oracle Spatial and MySLQ Spatial) is that you can query, edit and geoprocess geometries just with plain SQL, without the need of commercial software and API.

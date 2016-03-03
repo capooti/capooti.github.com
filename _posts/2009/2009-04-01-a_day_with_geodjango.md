@@ -1,12 +1,12 @@
 ---
-categories: Uncategorized, PostGIS, Python, OpenStreetMap, OpenLayers, GDAL, Django,
-  GeoDjango
-date: 2009/04/01 18:17:29
-guid: http://www.paolocorti.net/?p=93
-permalink: http://www.paolocorti.net/2009/04/01/a-day-with-geodjango/
-tags: Uncategorized, PostGIS, Python, OpenStreetMap, OpenLayers, GDAL, Django, GeoDjango
-title: A day with GeoDjango
+layout: post
+title: "A day with GeoDjango"
+description: "A day with GeoDjango"
+category:
+tags: [Uncategorized, PostGIS, Python, OpenStreetMap, OpenLayers, GDAL, Django, GeoDjango]
 ---
+{% include JB/setup %}
+
 This time i will introduce a really brilliant framework that every serious Web/GIS developers should be aware of: GeoDjango.
 
 Django is a Python Web framework for agile developers. It implements best web frameworks practices like coding by convention, MVC, ORM, REST, URL dispatcher and so on. Django is for Python what Rails is for Ruby, Grails is for Java, and MonoRail (and now ASP.NET MVC) is for .NET.
@@ -41,7 +41,7 @@ Let's see what are the major benefits provided in Django by GeoDjango
 
 With GeoDjango you can use Spatial attributes in your models, like in this sample:
 
-<pre lang="python">
+{% highlight python %}
 from django.contrib.gis.db import models
 
 class Lakes(models.Model):
@@ -49,7 +49,7 @@ class Lakes(models.Model):
     rate = models.IntegerField()
     geom = models.MultiPolygonField()
     objects = models.GeoManager()
-</pre>
+{% endhighlight %}
 
 note that now Model is imported from django.contrib.gis.db and not from django.db (from which is inherited).
 
@@ -69,7 +69,7 @@ You need to add this line if you want to use the spatial SQL benefit.
 
 When you will sync your model with the database, the corresponding spatial DDL SQL will be produced and run against the database, in our case, if we would be using PostGIS
 
-<pre lang="sql">
+{% highlight sql %}
 BEGIN;
 CREATE TABLE "land_lakes" (
     "id" serial NOT NULL PRIMARY KEY,
@@ -81,7 +81,7 @@ SELECT AddGeometryColumn('land_lakes', 'geom', 4326, 'MULTIPOLYGON', 2);
 ALTER TABLE "land_lakes" ALTER "geom" SET NOT NULL;
 CREATE INDEX "land_lakes_geom_id" ON "land_lakes" USING GIST ( "geom" GIST_GEOMETRY_OPS );
 COMMIT;
-</pre>
+{% endhighlight %}
 
 <strong>2) LayerMapping utility</strong>
 
@@ -89,7 +89,7 @@ LayerMapping is a very nice utility for import data like shapefiles or other OGR
 
 For example for our Lakes model it would be possible to import a shapefile (or whatever OGR datasources) called lakes creating a script like this:
 
-<pre lang="python">
+{% highlight python %}
 import os
 from django.contrib.gis.utils import LayerMapping
 from land.models import Lakes
@@ -108,26 +108,26 @@ def run(verbose=True):
                       transform=False, encoding='iso-8859-1')
 
     lm.save(strict=True, verbose=verbose)
-</pre>
+{% endhighlight %}
 
 Now you may run the script from the shell, and the shapefile will be loaded in your spatial database:
 
-<pre lang="python">
+{% highlight python %}
 from land.scripts import loadshape
 loadshape.run()
-</pre>
+{% endhighlight %}
 
 <strong>3) ogrinspect</strong>
 
 ogrinspect is a new option for the manage.py command line Django utility that will read a OGC data source and will automatically generate a Django model and a LayerMapping dictionary for being used with the LayerMapping utility.
 
-<pre lang="text">
+{% highlight bash %}
 $ python manage.py ogrinspect land/data/lakes.shp Lakes --srid=4326 --mapping --multi
-</pre>
+{% endhighlight %}
 
 this will generate the output we have used above for the model and the LayerMapping script:
 
-<pre lang="python">
+{% highlight python %}
 # This is an auto-generated Django model module created by ogrinspect.
 from django.contrib.gis.db import models
 
@@ -143,7 +143,7 @@ lakes_mapping = {
     'rate' : 'rate',
     'geom' : 'MULTIPOLYGON',
 }
-</pre>
+{% endhighlight %}
 
 <strong>4) Geographic Admin</strong>
 
@@ -151,16 +151,16 @@ By importing the admin stuff in your GeoDjango project, the admin will automatic
 
 Just add this to your admin.py:
 
-<pre lang="python">
+{% highlight python %}
 from django.contrib.gis import admin
 from models import Lakes
 
 admin.site.register(Lakes, admin.GeoModelAdmin)
-</pre>
+{% endhighlight %}
 
 Now in the admin web interface, when editing the GeoDjango datasets, you will have an OpenLayers interface for editing the feature's geometry.
 
-<img src="http://www.paolocorti.net/wp-content/uploads/2009/04/geodjango_admin-300x225.png" alt="The geometry field in the Django admin with GeoDjango" title="geodjango_admin" width="300" height="225" class="size-medium wp-image-107" />
+<img src="/assets/images/geodjango_admin.png" alt="The geometry field in the Django admin with GeoDjango" title="geodjango_admin" width="300" height="225" class="size-medium wp-image-107" />
 
 <strong>5) GeoDjango Database and GEOS API</strong>
 
@@ -170,12 +170,12 @@ Some samples:
 
 <strong>5.1 creating a feature</strong>
 
-<pre lang="python">
+{% highlight python %}
 >>>from django.contrib.gis.geos import GEOSGeometry
 >>>from land.models import Lakes
 >>>newlake = Lakes(name='newlake', rate=3, >>>geom=GEOSGeometry('MULTIPOLYGON((( 1 1, 1 2, 2 2, 1 1)))'))
 >>>Inewlake.save()
-</pre>
+{% endhighlight %}
 
 sql behind the scenes:
 <pre lang="sql">
@@ -192,13 +192,13 @@ True
 
 sql behind the scenes:
 
-<pre lang="sql">
+{% highlight sql %}
 SELECT "land_lakes"."id", "land_lakes"."name", "land_lakes"."rate", "land_lakes"."geom" FROM "land_lakes" WHERE ST_Touches("land_lakes"."geom", ST_GeomFromWKB('\\001\\...', 4326))
-</pre>
+{% endhighlight %}
 
 <strong>5.3 querysets methods</strong>
 
-<pre lang="python">
+{% highlight python %}
 >>>newlake.geom.area()
 0.5
 >>>centroid = newlake.geom.centroid
@@ -214,11 +214,11 @@ x:1.33333333333, y:1.66666666667
 4
 >>>newlake.geom.num_geom
 1
-</pre>
+{% endhighlight %}
 
 <strong>5.4 representation</strong>
 
-<pre lang="python">
+{% highlight python %}
 >>>newlake.geom.wkt
 'MULTIPOLYGON (((1.0000000000000000 1.0000000000000000, 1.0000000000000000 2.0000000000000000, 2.0000000000000000 2.0000000000000000, 1.0000000000000000 1.0000000000000000)))'
 >>>newlake.geom.wkb
@@ -229,21 +229,21 @@ x:1.33333333333, y:1.66666666667
 '{ "type": "MultiPolygon", "coordinates": [ [ [ [ 1.000000, 1.000000 ], [ 1.000000, 2.000000 ], [ 2.000000, 2.000000 ], [ 1.000000, 1.000000 ] ] ] ] }'
 >>>newlake.geom.ewkt
 'SRID=4326;MULTIPOLYGON (((1.0000000000000000 1.0000000000000000, 1.0000000000000000 2.0000000000000000, 2.0000000000000000 2.0000000000000000, 1.0000000000000000 1.0000000000000000)))'
-</pre>
+{% endhighlight %}
 
 <strong>5.5 Geoprocessing</strong>
 
-<pre lang="python">
+{% highlight python %}
 >>>bufferedgeom = newlake.geom.buffer(1)
 >>>from django.contrib.gis.geos import MultiPolygon
 >>>mp = MultiPolygon(bufferedgeom)
 >>>bufferedlake = Lakes(name='bufferedlake', rate=4, geom=mp)
 >>>bufferedlake.save()
-</pre>
+{% endhighlight %}
 
 <strong>6) Measurement Units API</strong>
 
-<pre lang="python">
+{% highlight python %}
 >>>from django.contrib.gis.measure import Distance
 >>>dist = Distance(km=1)
 >>>dist
@@ -257,7 +257,7 @@ x:1.33333333333, y:1.66666666667
 1.0
 >>>area.sq_mi
 3.8610215854244582e-07
-</pre>
+{% endhighlight %}
 
 <strong>7) GDAL API</strong>
 
@@ -266,7 +266,7 @@ GDAL API is a fantastic API to read (and in many cases write) <a href="http://ww
 As written before, you may not need GDAL in your GeoDjango project, but it can be a very useful Python library for accessing other spatial dataset, for importing/exporting and for system integration.
 For example in this sample i will copy one feature's geometry from a shapefile and will create a new feature with the same geometry in my GeoDjango spatial database:
 
-<pre lang="python">
+{% highlight python %}
 >>>from django.contrib.gis.gdal import DataSource
 >>>ds = DataSource('home/paolo/tralining/geodjango/land/data/lakes.shp')
 >>>ds.name
@@ -286,7 +286,7 @@ For example in this sample i will copy one feature's geometry from a shapefile a
 >>>mpgeom.add(feature.geom)
 >>>importedlake = Lakes(name='importedlake', rate=0, geom=GEOSGeometry(mpgeom.wkt))
 >>>importedlake.save()
-</pre>
+{% endhighlight %}
 
 <strong>Resources for getting started with Django/GeoDjango</strong>
 

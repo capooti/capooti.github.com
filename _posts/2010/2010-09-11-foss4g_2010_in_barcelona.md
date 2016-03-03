@@ -1,11 +1,12 @@
 ---
-categories: Uncategorized, GIS, conferences
-date: 2010/09/11 13:19:51
-guid: http://www.paolocorti.net/?p=277
-permalink: http://www.paolocorti.net/2010/09/11/foss4g-2010-in-barcelona/
-tags: Uncategorized, GIS, conferences
-title: FOSS4G 2010 in Barcelona
+layout: post
+title: "FOSS4G 2010 in Barcelona"
+description: "FOSS4G 2010 in Barcelona"
+category:
+tags: [Uncategorized, GIS, conferences]
 ---
+{% include JB/setup %}
+
 This year I was enough lucky to have the possibility to attend at the <a href="http://2010.foss4g.org">FOSS4G World conference in Barcelona</a> (thanks to <a href="http://ec.europa.eu/dgs/jrc/index.cfm">my company</a> for having send me there!) - that has been run just this week, as many of you may already know.
 I just came back home yesterday night and until my impression are still very clear, I were thinking it is a good idea to post them here.
 The conference, as you may know, is held every year and is organized by OSGeo. They try to organize it every year in a different continent, and this year was the time for Europe - Spain, so I couldn't miss it :D

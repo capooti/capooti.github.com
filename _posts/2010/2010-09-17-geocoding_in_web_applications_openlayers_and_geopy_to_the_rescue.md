@@ -1,11 +1,12 @@
 ---
-categories: Uncategorized, GIS, Tutorials, Python, OpenLayers, Django, geopy, jQuery
-date: 2010/09/17 21:00:27
-guid: http://www.paolocorti.net/?p=297
-permalink: http://www.paolocorti.net/2010/09/17/geocoding-in-web-applications-openlayers-and-geopy-to-the-rescue/
-tags: Uncategorized, GIS, Tutorials, Python, OpenLayers, Django, geopy, jQuery
-title: 'Geocoding in web applications: OpenLayers and geoPy to the rescue!'
+layout: post
+title: "Geocoding in web applications: OpenLayers and geoPy to the rescue!"
+description: "Geocoding in web applications: OpenLayers and geoPy to the rescue!"
+category:
+tags: [Uncategorized, GIS, Tutorials, Python, OpenLayers, Django, geopy, jQuery]
 ---
+{% include JB/setup %}
+
 In many situations, in your web applications, you will need a feature for geocoding an address, a city, a country...
 A possible approach is to use the Javascript API of the main geocoding services (Google Maps, Yahoo! Maps, GeoNames...).
 But as I have showed in a <a href="http://www.paolocorti.net/2009/10/14/geocoding-with-geopy/">previous post</a>, if you are using Python, there is an excellent API that will take care of this, without Javascript headaches: geoPy.
@@ -16,12 +17,12 @@ You could even adapt the Javascript code of this sample (a mix of OpenLayers and
 
 Basically this is what the tool will do: typing an address or place in a jQuery dialog, the dialog will be filled with results from three major gecoding services (Google, Yahoo! and GeoNames). Each result will be a link, and clicking on it there will be a zoom at that place in the OpenLayers map.
 
-<img src="http://www.paolocorti.net/wp-content/uploads/2010/09/olandgeopy.png" alt="OpenLayers and geoPy to the rescue!" title="olandgeopy" width="400"  />
+<img src="/assets/images/olandgeopy.png" alt="OpenLayers and geoPy to the rescue!" title="olandgeopy" width="400"  />
 
 As suggested we have a mix of client (Javascript) and server (Django) code.
 The idea is to expose a Django view accepting a string parameter (the place name to geocode) giving an xml output like this one:
 
-$$code(lang=xml)
+{% highlight xml %}
 <?xml version="1.0" ?>
 <geoservices>
   <service name="google">
@@ -36,11 +37,11 @@ $$code(lang=xml)
     <location lat="42.17704" lon="13.51706" name="Rovere Di Rocca Di Mezzo, IT 67048"/>
   </service>
 </geoservices>
-$$/code
+{% endhighlight %}
 
 This is the Django view implementing this functionality:
 
-$$code(lang=python)
+{% highlight python %}
 from django.shortcuts import render_to_response
 from django.http import HttpResponse
 from django.template import RequestContext
@@ -101,7 +102,7 @@ def get_service_element(doc, service_name, geocoder, address):
         except StopIteration:
             break
     return service
-$$/code
+{% endhighlight %}
 
 Basically the geolocate view checks if in the request there is the address string to geocode, and then by using the minidom API it creates the output xml.
 Note that each location node is built by querying the geocoding service with a geoPy's geocoder object.

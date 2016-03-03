@@ -1,35 +1,34 @@
 ---
-categories: GIS, PostGIS, ArcIMS, ArcObjects, ArcGis Desktop, ZigGis, FeatureServer,
-  QGIS, uDig, gvSIG, GeoServer, ArcSde
-date: 2008/06/06 17:45:32
-guid: http://www.paolocorti.net/public/wordpress/index.php/2008/06/06/spatial-database-for-postgres-and-arcgis-users-how-to-choose/
-permalink: http://www.paolocorti.net/2008/06/06/spatial-database-for-postgres-and-arcgis-users-how-to-choose/
-tags: GIS, PostGIS, ArcIMS, ArcObjects, ArcGis Desktop, ZigGis, FeatureServer, QGIS,
-  uDig, gvSIG, GeoServer, ArcSde
-title: 'Spatial Database for Postgres and ArcGis users: how to choose'
+layout: post
+title: "Spatial Database for Postgres and ArcGis users: how to choose"
+description: "Spatial Database for Postgres and ArcGis users: how to choose"
+category:
+tags: [GIS, PostGIS, ArcIMS, ArcObjects, ArcGis Desktop, ZigGis, FeatureServer, QGIS, uDig, gvSIG, GeoServer, ArcSde]
 ---
-As many of you can have already read, ArcSde for Postgres is coming out at ArcGis 9.3 (it is currently in the release candidate state). It will let you store geometries in two formats, Esri geometry and PostGis geometry, in the same fashion ArcSde for Oracle is letting Esri or Oracle geometries be stored. 
+{% include JB/setup %}
+
+As many of you can have already read, ArcSde for Postgres is coming out at ArcGis 9.3 (it is currently in the release candidate state). It will let you store geometries in two formats, Esri geometry and PostGis geometry, in the same fashion ArcSde for Oracle is letting Esri or Oracle geometries be stored.
 I have seen some interest in the GIS community about this new, and i was reading <a href="http://geobabble.wordpress.com/2008/05/28/using-arcsde-93-with-postgresql-part-1/">interesting</a> <a href="http://geobabble.wordpress.com/2008/06/02/using-arcsde-93-with-postgresql-part-2/">posts</a> by Bill Dollins, <a href="http://blog.cleverelephant.ca/2008/05/why-use-arcsde.html">Paul Ramsey</a>, <a href="http://www.spatiallyadjusted.com/2008/05/09/a-look-at-postgresql-and-arcsde/">James Fee</a> and <a href="http://blog.davebouwman.net/2008/05/09/PreppingForWhere20.aspx">Dave Bouwman</a>, so I thought i would post here my opinion. Plus, as some of you may already know, <a href="http://www.obtusesoft.com/pr.html">zigGis 2.0 is out</a>, so I am very interested in understanding where it would be better to use one (ArcSde) or the other (zigGis 2.0) solution.
 
-First let me introduce you my point of view: i am since the ARC/INFO era a great fan of Esri software, and I am one of the many users in the GIS community saying that Esri is much much better vs Open Source in the GIS desktop products sector. 
+First let me introduce you my point of view: i am since the ARC/INFO era a great fan of Esri software, and I am one of the many users in the GIS community saying that Esri is much much better vs Open Source in the GIS desktop products sector.
 In fact, while also in the GIS OS scenario there are good products like QGIS, uDig, gvSIG (and some other), in my opinion no one of them still can even fairly reach what ArcGis Desktop and its extensions can actually do (with the big limit that you can use it only in a Microsoft box, but that is another story).
 
 At my job place, working for the public sector and willing to follow the CEE recommendations, I am also an advocate of Open Source software, and I truely believe that -not like for desktop products - the GIS OS scenario for server side products its perfectly close to commercial solutions, in some case even better.
 
 Products like MapServer, GeoServer, PostGis and their skeleton libraries like Proj and GDAL (just to name a few), are a wonderful example of outstanding results obtained within the Open Source philosophy from a fantastic GIS community of developers and very passionate users.
-I came to the OS side some years ago, when at my office we couldn't afford anymore the Esri  product suite (it was the 9.0 era, then). 
+I came to the OS side some years ago, when at my office we couldn't afford anymore the Esri  product suite (it was the 9.0 era, then).
 To go straight, we decided to switch to Open Source for the server family (choicing PostGis and MapServer replacing ArcSde for SQL Server and ArcIms), while we decided to keep the ArcView's licenses. Nowadays i think this was a decision that saved us money and still let us to keep a powerful GIS environment.
 What I was missing then, though, was the Esri GeoDatabase model, and the possibility to view and edit data via ArcMap without using complicated solutions implemented by using some sort of interchange files.
 Regarding the GeoDatabase model, I quickly found that using Postgres SQL and PostGis Spatial functions I could almost obtain what i really needed from the Geodatabase stuff.
 Regarding the possibility to use PostGis in ArcMap, that days where the times when I started to think about writing a PostGis connector for ArcGis Desktop in my spare time (typically at the weekends and with long no-sleep nights). Not being totally satisfied of pgArc, and before I could even start with my project, I discovered the magnificent ArcObjects code that Abe Gillespie wrote to implement its first zigGis version (0.3 if i don't remember badly).
-The code Abe wrote was really a wonder at my eyes: a completed PostGis Workspace implementations developed from scratch by using ArcObjects in an extreme, original and not at all documented way (at that time, but maybe even now). 
+The code Abe wrote was really a wonder at my eyes: a completed PostGis Workspace implementations developed from scratch by using ArcObjects in an extreme, original and not at all documented way (at that time, but maybe even now).
 To get an idea, here is how looks the code to add a PostGis layer in ArcMap using the zigGis library:
 
-$$code(lang=vbnet)
+{% highlight visualbasic %}
   'Create PostGisWorkspaceFactory
   Dim wksf As IWorkspaceFactory
   Set wksf = New PostGisWorkspaceFactory
-  
+
   'Open the PostGIS Workspace from a from IPropertySet (in the SDEWorkspaceFactory fashion)
   Dim ps As IPropertySet
   Set ps = New PropertySet
@@ -44,29 +43,28 @@ $$code(lang=vbnet)
   End With
   Dim ws As IWorkspace
   Set ws = wksf.Open(ps, 0)
-  
+
   'Alternatively you can open the PostGIS Workspace from a zigFile
   'ws = wksf.OpenFromFile(@"C:\ziggis\ZigGis\example.zig", 0);
-  
+
   'Open the PostGIS feature class
   Dim fwks As IFeatureWorkspace
   Set fwks = ws
   Dim fc As IFeatureClass
   Set fc = fwks.OpenFeatureClass("zone")
-  
+
   'Create the new layer (default renderer is ISimpleRenderer)
   Dim layer As IFeatureLayer
   Set layer = New PostGisFeatureLayer
   Set layer.FeatureClass = fc
   layer.Name = fc.AliasName
-  
+
   'Add the layer in ArcMap focus map
   Dim pMxDoc As IMxDocument
   Set pMxDoc = ThisDocument
   pMxDoc.FocusMap.AddLayer layer
-$$/code
+{% endhighlight %}
 
-(more samples <a href="http://www.paolocorti.net/public/wordpress/index.php/2007/02/21/iworkspacefactory-wksf-new-postgisworkspacefactory/">here</a>)
 
 So I just fell in love with that project, and as far Abe had no time to keep it in life because of other works he was heavily involved in, I decided to inherit its work and to keep it in life.
 Almost at the same time, also Bill Dollins, one of the most experienced GIS people I have ever known, joined the project, and together we released zigGis 1.0, the first zigGis version with an installer. Quickly other versions came out, until zigGis 1.2, the first version massively installed by the community (almost 5,000 downloads).
@@ -200,14 +198,3 @@ Well, mostly is just a question to use some DDL, Postgres SQL and PostGis Spatia
 Fot this time is all, I hope i could clarify some points to you.
 
 <em>Disclaimer: I still couldn't directly test ArcSde for Postgres 9.3 (and not sure I can ever be able to), and i am one of the zigGis developers</em>.
-
-
-
-
-
-
-
-
-
-
-

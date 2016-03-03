@@ -1,11 +1,11 @@
 ---
-categories: GIS, GDAL, Oracle Spatial, GeoDjango
-date: 2011/03/22 17:00:00
-guid: http://www.paolocorti.net/2011/03/22/compiling-gdal-with-oracle-support/
-permalink: http://www.paolocorti.net/2011/03/22/compiling-gdal-with-oracle-support/
-tags: GIS, GDAL, Oracle Spatial, GeoDjango
-title: Compiling GDAL with Oracle Spatial support
+layout: post
+title: "Compiling GDAL with Oracle Spatial support"
+description: "Compiling GDAL with Oracle Spatial support"
+category:
+tags: [GIS, GDAL, Oracle Spatial, GeoDjango]
 ---
+{% include JB/setup %}
 
 These are my quick notes for installing Oracle Instant Client on a Linux box (currently I have tested this on a Ubuntu 10.10 64 bit box and with Oracle 11.2 and GDAL 1.8.0), and then configuring GDAL for using Oracle (OCI and GeoRaster drivers support).
 
@@ -25,9 +25,9 @@ You need to download the following 3 zip archives:
 
 Then extract the archives to a location you prefer:
 
-    ~/software/oracle$ unzip instantclient-basic-linux-x86-64-11.2.0.2.0.zip 
-    ~/software/oracle$ unzip instantclient-sqlplus-linux-x86-64-11.2.0.2.0.zip 
-    ~/software/oracle$ unzip instantclient-sdk-linux-x86-64-11.2.0.2.0.zip 
+    ~/software/oracle$ unzip instantclient-basic-linux-x86-64-11.2.0.2.0.zip
+    ~/software/oracle$ unzip instantclient-sqlplus-linux-x86-64-11.2.0.2.0.zip
+    ~/software/oracle$ unzip instantclient-sdk-linux-x86-64-11.2.0.2.0.zip
 
 You then need to set the following environment variables, for example editing the .bashrc file in your home directory:
 
@@ -183,4 +183,3 @@ Finally, in the settings.py file of your GeoDjango application, don't forget to 
 
 [ref1]: http://forums.oracle.com/forums/thread.jspa?messageID=4570333
 [ref2]: http://blog.thinkside.co.uk/?p=218
-

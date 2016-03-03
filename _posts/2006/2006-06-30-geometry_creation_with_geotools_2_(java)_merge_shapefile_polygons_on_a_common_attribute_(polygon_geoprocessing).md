@@ -1,22 +1,22 @@
 ---
-categories: GIS, GeoTools, devs, Java
-date: 2006/06/30 18:46:38
-guid: http://localhost/paolocorti/?p=5
-permalink: http://www.paolocorti.net/2006/06/30/geometry-creation-with-geotools-2-java-merge-shapefile-polygons-on-a-common-attribute-polygon-geoprocessing/
-tags: GIS, GeoTools, devs, Java
-title: 'Geometry creation with GeoTools 2 (Java): merge shapefile polygons on a common
-  attribute (polygon geoprocessing)'
+layout: post
+title: "Geometry creation with GeoTools 2 (Java): merge shapefile polygons on a common attribute (polygon geoprocessing)"
+description: "Geometry creation with GeoTools 2 (Java): merge shapefile polygons on a common attribute (polygon geoprocessing)"
+category:
+tags: [GIS, GeoTools, devs, Java]
 ---
+{% include JB/setup %}
+
 Here I post a sample java class I developed some months ago, working with geometry creation in GeoTools 2. This class, given an input shapefile, will elaborate an output shapefile merging the input polygons on a common field.
 
 <blockquote>Geotools is an open source (LGPL) Java code library which provides standards compliant methods for the manipulation of geospatial data, for example to implement Geographic Information Systems (GIS). The Geotools library implements Open Geospatial Consortium (OGC) specifications as they are developed, in close collaboration with the GeoAPI and GeoWidgets projects. The capabilities of Geotools are presented in the feature list.</blockquote>
 
-$$code(lang=java)
+{% highlight java %}
 /*
  * Created on 24-giu-2004
  */
 package com.PaoloCorti.GIS.GeometryBuilder;
- 
+
 /**
  * @author corti
  * Richiede GeoTools2 e jts 1.4.0
@@ -48,9 +48,9 @@ import org.geotools.filter.FilterType;
 import org.geotools.filter.LiteralExpression;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.MultiPolygon;
- 
+
 public class UnionPolygonByAttribute {
- 
+
  /**
   * main, richiede come parametri:
   * 1. shapefile di input (es: C:\temp\datiGIS\province.shp)
@@ -73,7 +73,7 @@ public class UnionPolygonByAttribute {
              else
                Stampa("specificare tutti i parametri!");
       }
-      
+
       /**
        * Effettua il merge dello shape di input in uno shape di output
        * @param InputShape Shapefile di input (da mergiare)
@@ -173,7 +173,7 @@ public class UnionPolygonByAttribute {
                            }
                          }                      
       }
-      
+
       /**
        * Unisce n poligoni in un poligono
        * @param fr
@@ -187,7 +187,7 @@ public class UnionPolygonByAttribute {
                              Geometry geomarr[] = new Geometry[nfeat];
                           while(fr.hasNext()) {
                                Feature feature = fr.next();
-                               //Stampa(String.valueOf(feature.getDefaultGeometry().getArea())); 
+                               //Stampa(String.valueOf(feature.getDefaultGeometry().getArea()));
                                geomarr[i++] = feature.getDefaultGeometry();
                              //System.out.print(i + "/" + nfeat + "-");
                           }
@@ -209,11 +209,9 @@ public class UnionPolygonByAttribute {
                   return null;            
             }
       }
-      
+
       private static void Stampa(String stringa){
                   System.out.println(stringa);
             }
 }
-$$/code
-
-
+{% endhighlight %}
