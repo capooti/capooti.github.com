@@ -5,6 +5,8 @@ tagline: My talks at conferences
 ---
 {% include JB/setup %}
 
+
+
 ### Implementing an Open Source Spatiotemporal Search Platform for Spatial Data Infrastructures
 
 *Open Source Geospatial Research & Education Symposium*
@@ -12,6 +14,8 @@ tagline: My talks at conferences
 October 12-14, 2016, Perugia, Italy
 
 <a href="http://www.slideshare.net/capooti/implementing-an-open-source-spatiotemporal-search-platform-for-spatial-data-infrastructures">Slides</a>
+
+with Ben Lewis (Center for Geographic Analysis, Harvard University)
 
 
 
@@ -23,6 +27,8 @@ July 25-27, 2016 at George Mason University, Fairfax, VA, USA
 
 <a href="http://www.slideshare.net/capooti/building-an-open-source-realtime-billion-object-spatiotemporal-search-platform">Slides</a>
 
+with Ben Lewis (Center for Geographic Analysis, Harvard University)
+
 
 
 ### GeoNode Intro & Demo
@@ -32,6 +38,20 @@ July 25-27, 2016 at George Mason University, Fairfax, VA, USA
 June 14-15, 2016 at Center for Geographic Analysis, Harvard University, Cambridge, MA US
 
 <a href="http://www.slideshare.net/capooti/geo-node-intro-amp-demo">Slides</a>
+
+with Cristiano Giovando (World Bank)
+
+
+
+### GeoNode per il Supporto alle Emergenze Umanitarie
+
+*ASITA 2014*
+
+October 16, 2014, Florence, Italy
+
+with Simone Dalmasso (Joint Research Centre)
+
+<a href="http://www.slideshare.net/capooti/geonode-per-il-supporto-alle-emergenze-umanitarie">Slides</a>
 
 
 
@@ -43,6 +63,8 @@ September 8-13, 2014, Portland OR, USA
 
 <a href="http://www.slideshare.net/capooti/foss4g-2014-geonodefinal">Slides</a>
 
+with Simone Dalmasso (Joint Research Centre) and Ariel Nunez (World Bank)
+
 
 
 ### GeoNode 2.0
@@ -52,6 +74,8 @@ September 8-13, 2014, Portland OR, USA
 October 10, 2013, Bologna, Italy
 
 <a href="http://www.slideshare.net/capooti/geonode-20">Slides</a>
+
+with Simone Dalmasso (Joint Research Centre) and Luca Casagrande
 
 
 
@@ -82,3 +106,15 @@ October 2010, Foligno, Italy
 October 2010, Foligno, Italy
 
 <a href="http://www.slideshare.net/capooti/developing-geospatial-software-with-python-part-1">Slides</a>
+
+with Alessandro Pasotti
+
+
+
+### GeoDjango Workshop
+
+*XI Meeting degli utenti di lingua Italiana di GRASS e FOSS4G*
+
+February 2010, Lugano, Switzerland
+
+with Alessandro Furieri and Alessandro Pasotti
