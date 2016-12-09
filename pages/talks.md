@@ -7,6 +7,18 @@ tagline: My talks at conferences
 
 
 
+### Status of WorldMap, 2016
+
+*GeoNode Summit 2016, Rome, Italy - 11/29/2016*
+
+November 11/29/2016, Rome, Italy
+
+<a href="http://www.slideshare.net/capooti/status-of-worldmap-2016">Slides</a>
+
+with Ben Lewis (Center for Geographic Analysis, Harvard University)
+
+
+
 ### Implementing an Open Source Spatiotemporal Search Platform for Spatial Data Infrastructures
 
 *Open Source Geospatial Research & Education Symposium*
