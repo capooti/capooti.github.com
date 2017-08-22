@@ -113,6 +113,8 @@ September 8-13, 2014, Portland OR, USA
 
 <a href="http://www.slideshare.net/capooti/foss4g-2014-geonodefinal">Slides</a>
 
+<a href="https://vimeo.com/107484262">Video</a>
+
 with Simone Dalmasso (Joint Research Centre) and Ariel Nunez (World Bank)
 
 
