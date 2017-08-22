@@ -7,6 +7,44 @@ tagline: My talks at conferences
 
 
 
+### Maintaining Spatial Data Infrastructures (SDIs) using distributed task queues
+
+*FOSS4G 2017*
+
+August 18-19, 2017, Seaport Hotel & World Trade Center Boston, MA US
+
+<a href="https://www.slideshare.net/capooti/maintaining-spatial-data-infrastructures-sdis-using-distributed-task-queues">Slides</a>
+
+with Ben Lewis (Center for Geographic Analysis, Harvard University)
+
+
+
+### Building SDIs and geoportals with GeoNode and a search engine
+
+*FOSS4G 2017*
+
+August 18-19, 2017, Seaport Hotel & World Trade Center Boston, MA US
+
+<a href="http://www.paolocorti.net/foss4g_2017_geonode_solr/">Workshop tutorials</a>
+
+<a href="https://github.com/capooti/foss4g_2017_geonode_solr">Workshop repository</a>
+
+with Ben Lewis and Devika Kakkar (Center for Geographic Analysis, Harvard University)
+
+
+
+### Making Temporal Search Central in a Spatial Data Infrastructure
+
+*2017 International Symposium on Spatiotemporal Computing*
+
+August 7-9, 2017, Harvard University, Cambridge, MA US
+
+<a href="https://www.slideshare.net/capooti/making-temporal-search-central-in-a-spatial-data-infrastructure">Slides</a>
+
+with Ben Lewis (Center for Geographic Analysis, Harvard University)
+
+
+
 ### Status of WorldMap, 2016
 
 *GeoNode Summit 2016, Rome, Italy - 11/29/2016*
