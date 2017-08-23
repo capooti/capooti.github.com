@@ -45,6 +45,18 @@ with Ben Lewis (Center for Geographic Analysis, Harvard University)
 
 
 
+### Harvard Hypermap: An Open Source Framework for Making the World’s Geospatial Information more Accessible
+
+*2017 American Association of Geographers Annual Meeting*
+
+April 5-9, 2017, Boston, MA US
+
+<a href="https://www.slideshare.net/capooti/hhypermap-agi-2017">Slides</a>
+
+with Ben Lewis, Wendy Guan
+
+
+
 ### Status of WorldMap, 2016
 
 *GeoNode Summit 2016, Rome, Italy - 11/29/2016*
